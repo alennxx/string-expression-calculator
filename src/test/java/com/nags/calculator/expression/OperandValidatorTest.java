@@ -16,7 +16,7 @@ public class OperandValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"a", "4.5", "3,2", ".9", "-2.3", "+2", "%", "+", "-"})
+    @ValueSource(strings = {"a", "4.5", "3,2", ".9", "-2.3", "+2", "%", "+", "-", " "})
     void shouldReturnFalseForInvalidOperand(String token) {
         OperandValidator operandValidator = new OperandValidator();
 
