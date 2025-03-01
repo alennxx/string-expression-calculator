@@ -13,4 +13,14 @@ public class Operand implements Token {
         return value;
     }
 
+    @Override
+    public String toInfixNotation() {
+        return value.toString();
+    }
+
+    @Override
+    public String toPostfixNotation() {
+        return value.toString();
+    }
+
 }
