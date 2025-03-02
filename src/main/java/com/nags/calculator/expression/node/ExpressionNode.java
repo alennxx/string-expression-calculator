@@ -1,4 +1,4 @@
-package com.nags.calculator.expression;
+package com.nags.calculator.expression.node;
 
 public interface ExpressionNode<N extends Number> {
     N evaluate();

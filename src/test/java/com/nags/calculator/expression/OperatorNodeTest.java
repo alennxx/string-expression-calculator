@@ -1,5 +1,7 @@
 package com.nags.calculator.expression;
 
+import com.nags.calculator.expression.node.ExpressionNode;
+import com.nags.calculator.expression.node.OperatorNode;
 import com.nags.calculator.operation.Operation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class OperatorTest {
+public class OperatorNodeTest {
 
     private static final String SPACE = " ";
     private static final Integer OPERATION_RESULT = 5;
@@ -18,19 +20,19 @@ public class OperatorTest {
     private Operation<String,Integer> operation;
     private ExpressionNode<Integer> left;
     private ExpressionNode<Integer> right;
-    private Operator<String,Integer> operator;
+    private OperatorNode<String,Integer> operatorNode;
 
     @BeforeEach
     void setUpOperator() {
         operation = operation();
         left = token(LEFT_OPERAND_VALUE);
         right = token(RIGHT_OPERAND_VALUE);
-        operator = new Operator<>(operation, left, right);
+        operatorNode = new OperatorNode<>(operation, left, right);
     }
 
     @Test
     void shouldEvaluate() {
-        Number evaluationResult = operator.evaluate();
+        Number evaluationResult = operatorNode.evaluate();
 
         assertThat(evaluationResult).isEqualTo(OPERATION_RESULT);
         verify(left).evaluate();
@@ -40,7 +42,7 @@ public class OperatorTest {
 
     @Test
     void shouldGetInfixNotation() {
-        String infixNotation = operator.toInfixNotation();
+        String infixNotation = operatorNode.toInfixNotation();
 
         assertThat(infixNotation).isEqualTo(LEFT_OPERAND_VALUE + SPACE
                 + OPERATION_SYMBOL + SPACE + RIGHT_OPERAND_VALUE);
@@ -51,7 +53,7 @@ public class OperatorTest {
 
     @Test
     void shouldGetPostfixNotation() {
-        String postfixNotation = operator.toPostfixNotation();
+        String postfixNotation = operatorNode.toPostfixNotation();
 
         assertThat(postfixNotation).isEqualTo(LEFT_OPERAND_VALUE + SPACE
                 + RIGHT_OPERAND_VALUE + SPACE + OPERATION_SYMBOL);

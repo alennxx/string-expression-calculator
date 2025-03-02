@@ -1,4 +1,4 @@
-package com.nags.calculator.impl;
+package com.nags.calculator.strToInt;
 
 import com.nags.calculator.expression.OperandParser;
 import org.apache.commons.lang3.math.NumberUtils;

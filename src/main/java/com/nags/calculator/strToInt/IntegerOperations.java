@@ -1,4 +1,4 @@
-package com.nags.calculator.impl;
+package com.nags.calculator.strToInt;
 
 import com.nags.calculator.operation.MathOperation;
 

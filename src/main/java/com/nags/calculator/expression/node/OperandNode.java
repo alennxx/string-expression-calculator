@@ -1,10 +1,10 @@
-package com.nags.calculator.expression;
+package com.nags.calculator.expression.node;
 
-public class Operand<N extends Number> implements ExpressionNode<N> {
+public class OperandNode<N extends Number> implements ExpressionNode<N> {
 
     private final N value;
 
-    public Operand(N value) {
+    public OperandNode(N value) {
         this.value = value;
     }
 

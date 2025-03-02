@@ -1,4 +1,4 @@
-package com.nags.calculator.impl;
+package com.nags.calculator.strToInt;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

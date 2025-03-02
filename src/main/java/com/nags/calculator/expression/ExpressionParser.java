@@ -1,5 +1,8 @@
 package com.nags.calculator.expression;
 
+import com.nags.calculator.expression.node.ExpressionNode;
+import com.nags.calculator.expression.node.OperandNode;
+import com.nags.calculator.expression.node.OperatorNode;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
 
@@ -24,8 +27,8 @@ public class ExpressionParser<I, T, N extends Number> {
         final Stack<Operation<T, N>> operations = new Stack<>();
         for (T token : tokens) {
             if (operandParser.isValid(token)) {
-                Operand<N> operand = new Operand<>(operandParser.parse(token));
-                result.push(operand);
+                OperandNode<N> operandNode = new OperandNode<>(operandParser.parse(token));
+                result.push(operandNode);
             } else if (operationRegistry.isSupportedOperator(token)) {
                 Operation<T, N> operation = operationRegistry.getOperation(token);
                 while (!operations.isEmpty() && operations.peek().priority() >= operation.priority()) {
@@ -43,14 +46,14 @@ public class ExpressionParser<I, T, N extends Number> {
     }
 
     private void pushOperatorForTopOperation(Stack<ExpressionNode<N>> result, Stack<Operation<T, N>> operations) {
-        Operator<T, N> operator = createOperator(result, operations);
-        result.push(operator);
+        OperatorNode<T, N> operatorNode = createOperator(result, operations);
+        result.push(operatorNode);
     }
 
-    private Operator<T, N> createOperator(Stack<ExpressionNode<N>> result, Stack<Operation<T, N>> operations) {
+    private OperatorNode<T, N> createOperator(Stack<ExpressionNode<N>> result, Stack<Operation<T, N>> operations) {
         ExpressionNode<N> right = result.pop();
         ExpressionNode<N> left = result.pop();
-        return new Operator<>(operations.pop(), left, right);
+        return new OperatorNode<>(operations.pop(), left, right);
     }
 
 }

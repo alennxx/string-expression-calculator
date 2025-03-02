@@ -1,5 +1,7 @@
 package com.nags.calculator.expression;
 
+import com.nags.calculator.expression.node.ExpressionNode;
+
 public class Expression<N extends Number> implements ExpressionNode<N> {
 
     private final ExpressionNode<N> rootExpressionNode;
