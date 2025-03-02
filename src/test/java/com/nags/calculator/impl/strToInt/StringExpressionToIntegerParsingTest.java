@@ -1,10 +1,8 @@
-package com.nags.calculator.expression;
+package com.nags.calculator.impl.strToInt;
 
 import com.nags.calculator.common.Separator;
-import com.nags.calculator.impl.strToInt.IntegerOperations;
-import com.nags.calculator.impl.strToInt.IntegerParser;
-import com.nags.calculator.impl.strToInt.StringInputParser;
-import com.nags.calculator.impl.strToInt.StringToSignParser;
+import com.nags.calculator.expression.Expression;
+import com.nags.calculator.expression.ExpressionParser;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.impl.Addition;
 import com.nags.calculator.operation.impl.Division;
@@ -18,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExpressionParserTest {
+public class StringExpressionToIntegerParsingTest {
 
     @ParameterizedTest
     @MethodSource("parseExpressionCases")

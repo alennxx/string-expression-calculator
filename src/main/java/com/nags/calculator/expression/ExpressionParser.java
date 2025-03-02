@@ -5,7 +5,6 @@ import com.nags.calculator.expression.node.OperandNode;
 import com.nags.calculator.expression.node.OperatorNode;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
-import com.nags.calculator.operation.representation.RepresentationType;
 
 import java.util.List;
 import java.util.Stack;

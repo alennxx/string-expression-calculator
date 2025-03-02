@@ -2,8 +2,8 @@ package com.nags.calculator.operation.impl;
 
 import com.nags.calculator.operation.MathOperation;
 import com.nags.calculator.operation.Operation;
-import com.nags.calculator.operation.representation.NameRepresentation;
-import com.nags.calculator.operation.representation.SignRepresentation;
+import com.nags.calculator.operation.representation.impl.NameRepresentation;
+import com.nags.calculator.operation.representation.impl.SignRepresentation;
 
 import java.util.List;
 
