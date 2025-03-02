@@ -2,6 +2,8 @@ package com.nags.calculator.operation;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -57,13 +59,11 @@ public class OperationRegistryTest {
     }
 
     private OperationRegistry<String,Integer> registry(Operation<String,Integer> operation) {
-        OperationRegistry<String,Integer> registry = registry();
-        registry.register(operation);
-        return registry;
+        return new OperationRegistry<>(List.of(operation));
     }
 
     private OperationRegistry<String,Integer> registry() {
-        return new OperationRegistry<>();
+        return new OperationRegistry<>(List.of());
     }
 
     private Operation<String,Integer> operation() {

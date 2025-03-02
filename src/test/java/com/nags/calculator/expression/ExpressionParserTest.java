@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,10 +20,10 @@ public class ExpressionParserTest {
     @ParameterizedTest
     @MethodSource("parseExpressionCases")
     void shouldParseExpression(String stringExpression, String expectedPostfixNotation) {
-        OperationRegistry<String,Integer> registry = new OperationRegistry<>();
-        registry.register(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1));
-        registry.register(new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2));
-        registry.register(new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
+        OperationRegistry<String,Integer> registry = new OperationRegistry<>(
+            List.of(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1),
+                new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2),
+                new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2)));
         ExpressionParser<String,String,Integer> parser = new ExpressionParser<>(new StringInputParser(Separator.SPACE),
                 new IntegerParser(), registry);
 

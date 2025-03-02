@@ -5,6 +5,8 @@ import com.nags.calculator.impl.BaseCalculator;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
 
+import java.util.List;
+
 public class StringExpressionToIntegerCalculator extends BaseCalculator<String,String,Integer> {
 
     StringExpressionToIntegerCalculator() {
@@ -12,12 +14,12 @@ public class StringExpressionToIntegerCalculator extends BaseCalculator<String,S
     }
 
     private static OperationRegistry<String,Integer> operationRegistry() {
-        OperationRegistry<String,Integer> registry = new OperationRegistry<>();
-        registry.register(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1));
-        registry.register(new Operation<>(new IntegerOperations.IntegerSubtraction(), "-", 1));
-        registry.register(new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2));
-        registry.register(new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
-        return registry;
+        List<Operation<String,Integer>> supportedOperations = List.of(
+            new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1),
+            new Operation<>(new IntegerOperations.IntegerSubtraction(), "-", 1),
+            new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2),
+            new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
+        return new OperationRegistry<>(supportedOperations);
     }
 
 }
