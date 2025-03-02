@@ -15,7 +15,7 @@ public class ExpressionParser {
         this.operationRegistry = operationRegistry;
     }
 
-    Expression parseExpression(String stringExpression) {
+    public Expression parseExpression(String stringExpression) {
         final String[] tokens = stringExpression.split(Separator.SPACE);
         final Stack<Token> result = new Stack<>();
         final Stack<Operation> operations = new Stack<>();

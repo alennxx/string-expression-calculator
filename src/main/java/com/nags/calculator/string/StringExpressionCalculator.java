@@ -1,20 +1,21 @@
 package com.nags.calculator.string;
 
 import com.nags.calculator.Calculator;
+import com.nags.calculator.expression.Expression;
+import com.nags.calculator.expression.ExpressionParser;
 
 public class StringExpressionCalculator implements Calculator<String> {
 
-    private static final StringExpressionCalculator instance = new StringExpressionCalculator();
+    private final ExpressionParser expressionParser;
 
-    static StringExpressionCalculator getInstance() {
-        return instance;
+    StringExpressionCalculator(ExpressionParser expressionParser) {
+        this.expressionParser = expressionParser;
     }
 
-    private StringExpressionCalculator() {}
-
     @Override
-    public Integer calculate(String s) {
-        return 0;
+    public Integer calculate(String input) {
+        Expression expression = expressionParser.parseExpression(input);
+        return expression.evaluate();
     }
 
 }

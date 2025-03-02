@@ -1,5 +1,8 @@
 package com.nags.calculator.string;
 
+import com.nags.calculator.expression.ExpressionParser;
+import com.nags.calculator.expression.OperandValidator;
+import com.nags.calculator.operation.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,11 +13,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StringExpressionCalculatorTest {
 
-    private static final StringExpressionCalculator calculator = StringExpressionCalculator.getInstance();
-
     @ParameterizedTest
     @MethodSource("calculationTestCases")
     void shouldCorrectlyCalculate(String input, Integer expectedResult) {
+        OperandValidator validator = new OperandValidator();
+        OperationRegistry registry = new OperationRegistry();
+        registry.register(new Addition());
+        registry.register(new Subtraction());
+        registry.register(new Multiplication());
+        registry.register(new Division());
+        ExpressionParser parser = new ExpressionParser(validator, registry);
+        StringExpressionCalculator calculator = new StringExpressionCalculator(parser);
+
         assertThat(calculator.calculate(input)).isEqualTo(expectedResult);
     }
 
