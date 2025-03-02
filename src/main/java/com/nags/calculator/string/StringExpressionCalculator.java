@@ -4,7 +4,7 @@ import com.nags.calculator.Calculator;
 import com.nags.calculator.expression.Expression;
 import com.nags.calculator.expression.ExpressionParser;
 
-public class StringExpressionCalculator implements Calculator<String> {
+public class StringExpressionCalculator implements Calculator<String,Integer> {
 
     private final ExpressionParser<Integer> expressionParser;
 
