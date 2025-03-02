@@ -7,19 +7,19 @@ public class OperationRegistry {
 
     private final Map<String, Operation> operations;
 
-    OperationRegistry() {
+    public OperationRegistry() {
         operations = new HashMap<>();
     }
 
-    void register(Operation operation) {
+    public void register(Operation operation) {
         operations.put(operation.symbol(), operation);
     }
 
-    boolean isSupportedOperator(String token) {
+    public boolean isSupportedOperator(String token) {
         return operations.containsKey(token);
     }
 
-    Operation getOperation(String token) {
+    public Operation getOperation(String token) {
         return operations.get(token);
     }
 
