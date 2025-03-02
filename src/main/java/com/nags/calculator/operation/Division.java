@@ -13,4 +13,9 @@ public class Division implements Operation {
     public String symbol() {
         return DIVISION_SIGN;
     }
+
+    @Override
+    public int priority() {
+        return 2;
+    }
 }

@@ -14,5 +14,8 @@ public class Addition implements Operation {
         return ADDITION_SIGN;
     }
 
-
+    @Override
+    public int priority() {
+        return 1;
+    }
 }

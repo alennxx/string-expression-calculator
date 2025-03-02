@@ -13,4 +13,9 @@ public class Multiplication implements Operation {
     public String symbol() {
         return MULTIPLICATION_SIGN;
     }
+
+    @Override
+    public int priority() {
+        return 2;
+    }
 }

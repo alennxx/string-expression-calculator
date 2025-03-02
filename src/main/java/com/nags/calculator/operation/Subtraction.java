@@ -13,4 +13,9 @@ public class Subtraction implements Operation {
     public String symbol() {
         return SUBTRACTION_SIGN;
     }
+
+    @Override
+    public int priority() {
+        return 1;
+    }
 }

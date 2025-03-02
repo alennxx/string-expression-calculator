@@ -4,8 +4,6 @@ import com.nags.calculator.operation.Operation;
 
 public class Operator implements Token {
 
-    private static final String SEPARATOR = " ";
-
     private final Operation operation;
     private final Token left;
     private final Token right;
@@ -23,12 +21,12 @@ public class Operator implements Token {
 
     @Override
     public String toInfixNotation() {
-        return left.toInfixNotation() + SEPARATOR + operation.symbol() + SEPARATOR + right.toInfixNotation();
+        return left.toInfixNotation() + Separator.SPACE + operation.symbol() + Separator.SPACE + right.toInfixNotation();
     }
 
     @Override
     public String toPostfixNotation() {
-        return left.toPostfixNotation() + SEPARATOR + right.toPostfixNotation() + SEPARATOR + operation.symbol();
+        return left.toPostfixNotation() + Separator.SPACE + right.toPostfixNotation() + Separator.SPACE + operation.symbol();
     }
 
 }
