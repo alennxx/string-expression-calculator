@@ -1,26 +1,26 @@
 package com.nags.calculator.expression;
 
-public class Expression implements Token {
+public class Expression implements ExpressionNode {
 
-    private final Token rootToken;
+    private final ExpressionNode rootExpressionNode;
 
-    Expression(Token rootToken) {
-        this.rootToken = rootToken;
+    Expression(ExpressionNode rootExpressionNode) {
+        this.rootExpressionNode = rootExpressionNode;
     }
 
     @Override
     public Integer evaluate() {
-        return rootToken.evaluate();
+        return rootExpressionNode.evaluate();
     }
 
     @Override
     public String toInfixNotation() {
-        return rootToken.toInfixNotation();
+        return rootExpressionNode.toInfixNotation();
     }
 
     @Override
     public String toPostfixNotation() {
-        return rootToken.toPostfixNotation();
+        return rootExpressionNode.toPostfixNotation();
     }
 
 }

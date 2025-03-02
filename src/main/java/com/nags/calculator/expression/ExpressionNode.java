@@ -1,6 +1,6 @@
 package com.nags.calculator.expression;
 
-public interface Token {
+public interface ExpressionNode {
     Integer evaluate();
     String toInfixNotation();
     String toPostfixNotation();

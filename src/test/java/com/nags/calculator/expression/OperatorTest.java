@@ -17,8 +17,8 @@ public class OperatorTest {
     private static final Integer RIGHT_OPERAND_VALUE = 4;
 
     private Operation operation;
-    private Token left;
-    private Token right;
+    private ExpressionNode left;
+    private ExpressionNode right;
     private Operator operator;
 
     @BeforeEach
@@ -68,12 +68,12 @@ public class OperatorTest {
         return operation;
     }
 
-    private Token token(Integer value) {
-        Token token = mock(Token.class);
-        when(token.evaluate()).thenReturn(value);
-        when(token.toInfixNotation()).thenReturn(value.toString());
-        when(token.toPostfixNotation()).thenReturn(value.toString());
-        return token;
+    private ExpressionNode token(Integer value) {
+        ExpressionNode expressionNode = mock(ExpressionNode.class);
+        when(expressionNode.evaluate()).thenReturn(value);
+        when(expressionNode.toInfixNotation()).thenReturn(value.toString());
+        when(expressionNode.toPostfixNotation()).thenReturn(value.toString());
+        return expressionNode;
     }
 
 }

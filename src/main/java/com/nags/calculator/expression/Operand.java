@@ -1,6 +1,6 @@
 package com.nags.calculator.expression;
 
-public class Operand implements Token {
+public class Operand implements ExpressionNode {
 
     private final Integer value;
 

@@ -17,7 +17,7 @@ public class ExpressionParser {
 
     public Expression parseExpression(String stringExpression) {
         final String[] tokens = stringExpression.split(Separator.SPACE);
-        final Stack<Token> result = new Stack<>();
+        final Stack<ExpressionNode> result = new Stack<>();
         final Stack<Operation> operations = new Stack<>();
         for (String token : tokens) {
             if (operandValidator.isValidOperand(token)) {
@@ -39,14 +39,14 @@ public class ExpressionParser {
         return new Expression(result.pop());
     }
 
-    private void pushOperatorForTopOperation(Stack<Token> result, Stack<Operation> operations) {
+    private void pushOperatorForTopOperation(Stack<ExpressionNode> result, Stack<Operation> operations) {
         Operator operator = createOperator(result, operations);
         result.push(operator);
     }
 
-    private Operator createOperator(Stack<Token> result, Stack<Operation> operations) {
-        Token right = result.pop();
-        Token left = result.pop();
+    private Operator createOperator(Stack<ExpressionNode> result, Stack<Operation> operations) {
+        ExpressionNode right = result.pop();
+        ExpressionNode left = result.pop();
         return new Operator(operations.pop(), left, right);
     }
 
