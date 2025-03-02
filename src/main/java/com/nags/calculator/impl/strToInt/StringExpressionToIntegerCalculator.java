@@ -1,4 +1,4 @@
-package com.nags.calculator.strToInt;
+package com.nags.calculator.impl.strToInt;
 
 import com.nags.calculator.common.Separator;
 import com.nags.calculator.impl.BaseCalculator;
@@ -11,7 +11,7 @@ public class StringExpressionToIntegerCalculator extends BaseCalculator<String,S
         super(new StringInputParser(Separator.SPACE), new IntegerParser(), operationRegistry());
     }
 
-    static OperationRegistry<String,Integer> operationRegistry() {
+    private static OperationRegistry<String,Integer> operationRegistry() {
         OperationRegistry<String,Integer> registry = new OperationRegistry<>();
         registry.register(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1));
         registry.register(new Operation<>(new IntegerOperations.IntegerSubtraction(), "-", 1));

@@ -1,9 +1,9 @@
 package com.nags.calculator.expression;
 
 import com.nags.calculator.common.Separator;
-import com.nags.calculator.strToInt.IntegerOperations;
-import com.nags.calculator.strToInt.IntegerParser;
-import com.nags.calculator.strToInt.StringInputParser;
+import com.nags.calculator.impl.strToInt.IntegerOperations;
+import com.nags.calculator.impl.strToInt.IntegerParser;
+import com.nags.calculator.impl.strToInt.StringInputParser;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
 import org.junit.jupiter.params.ParameterizedTest;
