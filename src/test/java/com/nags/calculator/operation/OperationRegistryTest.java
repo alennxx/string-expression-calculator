@@ -11,7 +11,7 @@ public class OperationRegistryTest {
 
     @Test
     void shouldUseOperationSymbolDuringRegistration() {
-        Operation operation = operation();
+        Operation<Integer> operation = operation();
 
         registry(operation);
 
@@ -20,7 +20,7 @@ public class OperationRegistryTest {
 
     @Test
     void shouldNotSupportUnregisteredOperation() {
-        OperationRegistry registry = registry();
+        OperationRegistry<Integer> registry = registry();
 
         boolean isSupported = registry.isSupportedOperator(OPERATION_SYMBOL);
 
@@ -29,8 +29,8 @@ public class OperationRegistryTest {
 
     @Test
     void shouldSupportRegisteredOperation() {
-        Operation operation = operation();
-        OperationRegistry registry = registry(operation);
+        Operation<Integer> operation = operation();
+        OperationRegistry<Integer> registry = registry(operation);
 
         boolean isSupported = registry.isSupportedOperator(operation.symbol());
 
@@ -39,37 +39,35 @@ public class OperationRegistryTest {
 
     @Test
     void shouldGetRegisteredOperation() {
-        Operation operation = operation();
-        OperationRegistry registry = registry(operation);
+        Operation<Integer> operation = operation();
+        OperationRegistry<Integer> registry = registry(operation);
 
-        Operation retrievedOperation = registry.getOperation(operation.symbol());
+        Operation<Integer> retrievedOperation = registry.getOperation(operation.symbol());
 
         assertThat(retrievedOperation).isEqualTo(operation);
     }
 
     @Test
     void shouldNotGetUnregisteredOperation() {
-        OperationRegistry registry = registry();
+        OperationRegistry<Integer> registry = registry();
 
-        Operation retrievedOperation = registry.getOperation(OPERATION_SYMBOL);
+        Operation<Integer> retrievedOperation = registry.getOperation(OPERATION_SYMBOL);
 
         assertThat(retrievedOperation).isNull();
     }
 
-    private OperationRegistry registry(Operation... operations) {
-        OperationRegistry registry = registry();
-        for (Operation operation : operations) {
-            registry.register(operation);
-        }
+    private OperationRegistry<Integer> registry(Operation<Integer> operation) {
+        OperationRegistry<Integer> registry = registry();
+        registry.register(operation);
         return registry;
     }
 
-    private OperationRegistry registry() {
-        return new OperationRegistry();
+    private OperationRegistry<Integer> registry() {
+        return new OperationRegistry<>();
     }
 
-    private Operation operation() {
-        Operation operation = mock(Operation.class);
+    private Operation<Integer> operation() {
+        Operation<Integer> operation = mock(Operation.class);
         when(operation.symbol()).thenReturn(OPERATION_SYMBOL);
         return operation;
     }

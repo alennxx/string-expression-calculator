@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class OperatorTest {
@@ -16,22 +15,22 @@ public class OperatorTest {
     private static final Integer LEFT_OPERAND_VALUE = 1;
     private static final Integer RIGHT_OPERAND_VALUE = 4;
 
-    private Operation operation;
-    private ExpressionNode left;
-    private ExpressionNode right;
-    private Operator operator;
+    private Operation<Integer> operation;
+    private ExpressionNode<Integer> left;
+    private ExpressionNode<Integer> right;
+    private Operator<Integer> operator;
 
     @BeforeEach
     void setUpOperator() {
         operation = operation();
         left = token(LEFT_OPERAND_VALUE);
         right = token(RIGHT_OPERAND_VALUE);
-        operator = new Operator(operation, left, right);
+        operator = new Operator<>(operation, left, right);
     }
 
     @Test
     void shouldEvaluate() {
-        Integer evaluationResult = operator.evaluate();
+        Number evaluationResult = operator.evaluate();
 
         assertThat(evaluationResult).isEqualTo(OPERATION_RESULT);
         verify(left).evaluate();
@@ -61,15 +60,15 @@ public class OperatorTest {
         verify(operation).symbol();
     }
 
-    private Operation operation() {
-        Operation operation = mock(Operation.class);
+    private Operation<Integer> operation() {
+        Operation<Integer> operation = mock(Operation.class);
         when(operation.apply(anyInt(), anyInt())).thenReturn(OPERATION_RESULT);
         when(operation.symbol()).thenReturn(OPERATION_SYMBOL);
         return operation;
     }
 
-    private ExpressionNode token(Integer value) {
-        ExpressionNode expressionNode = mock(ExpressionNode.class);
+    private ExpressionNode<Integer> token(Integer value) {
+        ExpressionNode<Integer> expressionNode = mock(ExpressionNode.class);
         when(expressionNode.evaluate()).thenReturn(value);
         when(expressionNode.toInfixNotation()).thenReturn(value.toString());
         when(expressionNode.toPostfixNotation()).thenReturn(value.toString());

@@ -6,15 +6,15 @@ import com.nags.calculator.expression.ExpressionParser;
 
 public class StringExpressionCalculator implements Calculator<String> {
 
-    private final ExpressionParser expressionParser;
+    private final ExpressionParser<Integer> expressionParser;
 
-    StringExpressionCalculator(ExpressionParser expressionParser) {
+    StringExpressionCalculator(ExpressionParser<Integer> expressionParser) {
         this.expressionParser = expressionParser;
     }
 
     @Override
     public Integer calculate(String input) {
-        Expression expression = expressionParser.parseExpression(input);
+        Expression<Integer> expression = expressionParser.parseExpression(input);
         return expression.evaluate();
     }
 

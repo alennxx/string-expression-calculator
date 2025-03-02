@@ -16,9 +16,9 @@ public class OperandTest {
 
     @Test
     void shouldEvaluate() {
-        Operand operand = new Operand(OPERAND_POSITIVE_VALUE);
+        Operand<Integer> operand = new Operand<>(OPERAND_POSITIVE_VALUE);
 
-        Integer evaluationResult = operand.evaluate();
+        Number evaluationResult = operand.evaluate();
 
         assertThat(evaluationResult).isEqualTo(OPERAND_POSITIVE_VALUE);
     }
@@ -35,8 +35,8 @@ public class OperandTest {
         shouldGetValueStringAsNotation(value, Operand::toPostfixNotation);
     }
 
-    void shouldGetValueStringAsNotation(Integer value, Function<Operand, String> notationGetter) {
-        Operand operand = new Operand(value);
+    void shouldGetValueStringAsNotation(Integer value, Function<Operand<Integer>, String> notationGetter) {
+        Operand<Integer> operand = new Operand<>(value);
 
         String infixNotation  = notationGetter.apply(operand);
 

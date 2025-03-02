@@ -5,26 +5,26 @@ import com.nags.calculator.operation.OperationRegistry;
 
 import java.util.Stack;
 
-public class ExpressionParser {
+public class ExpressionParser<N extends Number> {
 
-    private final OperandValidator operandValidator;
-    private final OperationRegistry operationRegistry;
+    private final OperandParser<N> operandParser;
+    private final OperationRegistry<N> operationRegistry;
 
-    public ExpressionParser(OperandValidator operandValidator, OperationRegistry operationRegistry) {
-        this.operandValidator = operandValidator;
+    public ExpressionParser(OperandParser<N> operandParser, OperationRegistry<N> operationRegistry) {
+        this.operandParser = operandParser;
         this.operationRegistry = operationRegistry;
     }
 
-    public Expression parseExpression(String stringExpression) {
+    public Expression<N> parseExpression(String stringExpression) {
         final String[] tokens = stringExpression.split(Separator.SPACE);
-        final Stack<ExpressionNode> result = new Stack<>();
-        final Stack<Operation> operations = new Stack<>();
+        final Stack<ExpressionNode<N>> result = new Stack<>();
+        final Stack<Operation<N>> operations = new Stack<>();
         for (String token : tokens) {
-            if (operandValidator.isValidOperand(token)) {
-                Operand operand = new Operand(Integer.parseInt(token));
+            if (operandParser.isValid(token)) {
+                Operand<N> operand = new Operand<>(operandParser.parse(token));
                 result.push(operand);
             } else if (operationRegistry.isSupportedOperator(token)) {
-                Operation operation = operationRegistry.getOperation(token);
+                Operation<N> operation = operationRegistry.getOperation(token);
                 while (!operations.isEmpty() && operations.peek().priority() >= operation.priority()) {
                     pushOperatorForTopOperation(result, operations);
                 }
@@ -36,18 +36,18 @@ public class ExpressionParser {
         while (!operations.isEmpty()) {
             pushOperatorForTopOperation(result, operations);
         }
-        return new Expression(result.pop());
+        return new Expression<>(result.pop());
     }
 
-    private void pushOperatorForTopOperation(Stack<ExpressionNode> result, Stack<Operation> operations) {
-        Operator operator = createOperator(result, operations);
+    private void pushOperatorForTopOperation(Stack<ExpressionNode<N>> result, Stack<Operation<N>> operations) {
+        Operator<N> operator = createOperator(result, operations);
         result.push(operator);
     }
 
-    private Operator createOperator(Stack<ExpressionNode> result, Stack<Operation> operations) {
-        ExpressionNode right = result.pop();
-        ExpressionNode left = result.pop();
-        return new Operator(operations.pop(), left, right);
+    private Operator<N> createOperator(Stack<ExpressionNode<N>> result, Stack<Operation<N>> operations) {
+        ExpressionNode<N> right = result.pop();
+        ExpressionNode<N> left = result.pop();
+        return new Operator<>(operations.pop(), left, right);
     }
 
 }

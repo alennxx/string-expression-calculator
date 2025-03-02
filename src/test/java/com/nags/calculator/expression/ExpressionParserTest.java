@@ -1,8 +1,8 @@
 package com.nags.calculator.expression;
 
-import com.nags.calculator.operation.Addition;
-import com.nags.calculator.operation.Division;
-import com.nags.calculator.operation.Multiplication;
+import com.nags.calculator.impl.IntegerOperations;
+import com.nags.calculator.impl.IntegerParser;
+import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,13 +17,13 @@ public class ExpressionParserTest {
     @ParameterizedTest
     @MethodSource("parseExpressionCases")
     void shouldParseExpression(String stringExpression, String expectedPostfixNotation) {
-        OperationRegistry registry = new OperationRegistry();
-        registry.register(new Addition());
-        registry.register(new Multiplication());
-        registry.register(new Division());
-        ExpressionParser parser = new ExpressionParser(new OperandValidator(), registry);
+        OperationRegistry<Integer> registry = new OperationRegistry<>();
+        registry.register(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1));
+        registry.register(new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2));
+        registry.register(new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
+        ExpressionParser<Integer> parser = new ExpressionParser<>(new IntegerParser(), registry);
 
-        Expression expression = parser.parseExpression(stringExpression);
+        Expression<Integer> expression = parser.parseExpression(stringExpression);
 
         assertThat(expression.toInfixNotation()).isEqualTo(stringExpression);
         assertThat(expression.toPostfixNotation()).isEqualTo(expectedPostfixNotation);

@@ -1,8 +1,10 @@
 package com.nags.calculator.string;
 
 import com.nags.calculator.expression.ExpressionParser;
-import com.nags.calculator.expression.OperandValidator;
-import com.nags.calculator.operation.*;
+import com.nags.calculator.impl.IntegerParser;
+import com.nags.calculator.impl.IntegerOperations;
+import com.nags.calculator.operation.Operation;
+import com.nags.calculator.operation.OperationRegistry;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,13 +18,13 @@ public class StringExpressionCalculatorTest {
     @ParameterizedTest
     @MethodSource("calculationTestCases")
     void shouldCorrectlyCalculate(String input, Integer expectedResult) {
-        OperandValidator validator = new OperandValidator();
-        OperationRegistry registry = new OperationRegistry();
-        registry.register(new Addition());
-        registry.register(new Subtraction());
-        registry.register(new Multiplication());
-        registry.register(new Division());
-        ExpressionParser parser = new ExpressionParser(validator, registry);
+        IntegerParser validator = new IntegerParser();
+        OperationRegistry<Integer> registry = new OperationRegistry<>();
+        registry.register(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1));
+        registry.register(new Operation<>(new IntegerOperations.IntegerSubtraction(), "-", 1));
+        registry.register(new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2));
+        registry.register(new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
+        ExpressionParser<Integer> parser = new ExpressionParser<>(validator, registry);
         StringExpressionCalculator calculator = new StringExpressionCalculator(parser);
 
         assertThat(calculator.calculate(input)).isEqualTo(expectedResult);

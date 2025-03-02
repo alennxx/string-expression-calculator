@@ -1,15 +1,15 @@
 package com.nags.calculator.expression;
 
-public class Operand implements ExpressionNode {
+public class Operand<N extends Number> implements ExpressionNode<N> {
 
-    private final Integer value;
+    private final N value;
 
-    public Operand(Integer value) {
+    public Operand(N value) {
         this.value = value;
     }
 
     @Override
-    public Integer evaluate() {
+    public N evaluate() {
         return value;
     }
 

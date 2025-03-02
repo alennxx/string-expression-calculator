@@ -2,20 +2,20 @@ package com.nags.calculator.expression;
 
 import com.nags.calculator.operation.Operation;
 
-public class Operator implements ExpressionNode {
+public class Operator<N extends Number> implements ExpressionNode<N> {
 
-    private final Operation operation;
-    private final ExpressionNode left;
-    private final ExpressionNode right;
+    private final Operation<N> operation;
+    private final ExpressionNode<N> left;
+    private final ExpressionNode<N> right;
 
-    public Operator(Operation operation, ExpressionNode left, ExpressionNode right) {
+    public Operator(Operation<N> operation, ExpressionNode<N> left, ExpressionNode<N> right) {
         this.operation = operation;
         this.left = left;
         this.right = right;
     }
 
     @Override
-    public Integer evaluate() {
+    public N evaluate() {
         return operation.apply(left.evaluate(), right.evaluate());
     }
 
