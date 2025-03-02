@@ -24,7 +24,7 @@ public class StringExpressionToIntegerParsingTest {
         List<Operation<Integer>> supportedOperations = List.of(
                 new Addition<>(new IntegerOperations.IntegerAddition()),
                 new Multiplication<>(new IntegerOperations.IntegerMultiplication()),
-                new Division<>(new IntegerOperations.IntegerDivision()));
+                new Division<>(new IntegerOperations.IntegerDivision(), new IntegerOperations.IsIntegerZero()));
         ExpressionParser<String,String,Integer> parser = new ExpressionParser<>(new StringInputParser(Separator.SPACE),
                 new IntegerParser(), new StringToSignParser(), supportedOperations);
 
