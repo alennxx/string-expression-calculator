@@ -12,7 +12,7 @@ import java.util.List;
 
 public class StringExpressionToIntegerCalculator extends BaseCalculator<String,String,Integer> {
 
-    StringExpressionToIntegerCalculator() {
+    public StringExpressionToIntegerCalculator() {
         super(new StringInputParser(Separator.SPACE), new IntegerParser(), new StringToSignParser(), supportedOperations());
     }
 
@@ -21,7 +21,7 @@ public class StringExpressionToIntegerCalculator extends BaseCalculator<String,S
             new Addition<>(new IntegerOperations.IntegerAddition()),
             new Subtraction<>(new IntegerOperations.IntegerSubtraction()),
             new Multiplication<>(new IntegerOperations.IntegerMultiplication()),
-            new Division<>(new IntegerOperations.IntegerDivision()));
+            new Division<>(new IntegerOperations.IntegerDivision(), new IntegerOperations.IsIntegerZero()));
     }
 
 }

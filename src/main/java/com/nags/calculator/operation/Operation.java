@@ -21,6 +21,9 @@ public abstract class Operation<N extends Number> {
     }
 
     public N apply(N a, N b) {
+        if (!canBeApplied(a, b)) {
+            throw new InvalidOperandsForOperationException(a, b, getRepresentation(RepresentationType.SIGN));
+        }
         return mathOperation.apply(a, b);
     }
 
@@ -30,6 +33,10 @@ public abstract class Operation<N extends Number> {
 
     public int getPriority() {
         return priority;
+    }
+
+    protected boolean canBeApplied(N a, N b) {
+        return true;
     }
 
 }
