@@ -15,10 +15,10 @@ public class OperatorTest {
     private static final Integer LEFT_OPERAND_VALUE = 1;
     private static final Integer RIGHT_OPERAND_VALUE = 4;
 
-    private Operation<Integer> operation;
+    private Operation<String,Integer> operation;
     private ExpressionNode<Integer> left;
     private ExpressionNode<Integer> right;
-    private Operator<Integer> operator;
+    private Operator<String,Integer> operator;
 
     @BeforeEach
     void setUpOperator() {
@@ -60,8 +60,8 @@ public class OperatorTest {
         verify(operation).symbol();
     }
 
-    private Operation<Integer> operation() {
-        Operation<Integer> operation = mock(Operation.class);
+    private Operation<String,Integer> operation() {
+        Operation<String,Integer> operation = mock(Operation.class);
         when(operation.apply(anyInt(), anyInt())).thenReturn(OPERATION_RESULT);
         when(operation.symbol()).thenReturn(OPERATION_SYMBOL);
         return operation;

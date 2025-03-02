@@ -1,14 +1,15 @@
 package com.nags.calculator.expression;
 
+import com.nags.calculator.common.Separator;
 import com.nags.calculator.operation.Operation;
 
-public class Operator<N extends Number> implements ExpressionNode<N> {
+public class Operator<T, N extends Number> implements ExpressionNode<N> {
 
-    private final Operation<N> operation;
+    private final Operation<T, N> operation;
     private final ExpressionNode<N> left;
     private final ExpressionNode<N> right;
 
-    public Operator(Operation<N> operation, ExpressionNode<N> left, ExpressionNode<N> right) {
+    public Operator(Operation<T, N> operation, ExpressionNode<N> left, ExpressionNode<N> right) {
         this.operation = operation;
         this.left = left;
         this.right = right;

@@ -3,7 +3,7 @@ package com.nags.calculator.impl;
 import com.nags.calculator.expression.OperandParser;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class IntegerParser implements OperandParser<Integer> {
+public class IntegerParser implements OperandParser<String,Integer> {
 
     private static final String OPERAND_PATTERN = "^-?\\d+$";
 

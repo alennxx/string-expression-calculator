@@ -11,7 +11,7 @@ public class OperationRegistryTest {
 
     @Test
     void shouldUseOperationSymbolDuringRegistration() {
-        Operation<Integer> operation = operation();
+        Operation<String,Integer> operation = operation();
 
         registry(operation);
 
@@ -20,7 +20,7 @@ public class OperationRegistryTest {
 
     @Test
     void shouldNotSupportUnregisteredOperation() {
-        OperationRegistry<Integer> registry = registry();
+        OperationRegistry<String,Integer> registry = registry();
 
         boolean isSupported = registry.isSupportedOperator(OPERATION_SYMBOL);
 
@@ -29,8 +29,8 @@ public class OperationRegistryTest {
 
     @Test
     void shouldSupportRegisteredOperation() {
-        Operation<Integer> operation = operation();
-        OperationRegistry<Integer> registry = registry(operation);
+        Operation<String,Integer> operation = operation();
+        OperationRegistry<String,Integer> registry = registry(operation);
 
         boolean isSupported = registry.isSupportedOperator(operation.symbol());
 
@@ -39,35 +39,35 @@ public class OperationRegistryTest {
 
     @Test
     void shouldGetRegisteredOperation() {
-        Operation<Integer> operation = operation();
-        OperationRegistry<Integer> registry = registry(operation);
+        Operation<String,Integer> operation = operation();
+        OperationRegistry<String,Integer> registry = registry(operation);
 
-        Operation<Integer> retrievedOperation = registry.getOperation(operation.symbol());
+        Operation<String,Integer> retrievedOperation = registry.getOperation(operation.symbol());
 
         assertThat(retrievedOperation).isEqualTo(operation);
     }
 
     @Test
     void shouldNotGetUnregisteredOperation() {
-        OperationRegistry<Integer> registry = registry();
+        OperationRegistry<String,Integer> registry = registry();
 
-        Operation<Integer> retrievedOperation = registry.getOperation(OPERATION_SYMBOL);
+        Operation<String,Integer> retrievedOperation = registry.getOperation(OPERATION_SYMBOL);
 
         assertThat(retrievedOperation).isNull();
     }
 
-    private OperationRegistry<Integer> registry(Operation<Integer> operation) {
-        OperationRegistry<Integer> registry = registry();
+    private OperationRegistry<String,Integer> registry(Operation<String,Integer> operation) {
+        OperationRegistry<String,Integer> registry = registry();
         registry.register(operation);
         return registry;
     }
 
-    private OperationRegistry<Integer> registry() {
+    private OperationRegistry<String,Integer> registry() {
         return new OperationRegistry<>();
     }
 
-    private Operation<Integer> operation() {
-        Operation<Integer> operation = mock(Operation.class);
+    private Operation<String,Integer> operation() {
+        Operation<String,Integer> operation = mock(Operation.class);
         when(operation.symbol()).thenReturn(OPERATION_SYMBOL);
         return operation;
     }

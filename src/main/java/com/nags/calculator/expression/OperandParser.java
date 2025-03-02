@@ -1,6 +1,6 @@
 package com.nags.calculator.expression;
 
-public interface OperandParser<N extends Number> {
-    boolean isValid(String input);
-    N parse(String input);
+public interface OperandParser<T, N extends Number> {
+    boolean isValid(T input);
+    N parse(T input);
 }

@@ -6,9 +6,9 @@ import com.nags.calculator.expression.ExpressionParser;
 
 public class StringExpressionCalculator implements Calculator<String,Integer> {
 
-    private final ExpressionParser<Integer> expressionParser;
+    private final ExpressionParser<String,String,Integer> expressionParser;
 
-    StringExpressionCalculator(ExpressionParser<Integer> expressionParser) {
+    StringExpressionCalculator(ExpressionParser<String,String,Integer> expressionParser) {
         this.expressionParser = expressionParser;
     }
 

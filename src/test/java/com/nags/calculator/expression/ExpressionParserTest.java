@@ -1,7 +1,9 @@
 package com.nags.calculator.expression;
 
+import com.nags.calculator.common.Separator;
 import com.nags.calculator.impl.IntegerOperations;
 import com.nags.calculator.impl.IntegerParser;
+import com.nags.calculator.impl.StringInputParser;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,11 +19,12 @@ public class ExpressionParserTest {
     @ParameterizedTest
     @MethodSource("parseExpressionCases")
     void shouldParseExpression(String stringExpression, String expectedPostfixNotation) {
-        OperationRegistry<Integer> registry = new OperationRegistry<>();
+        OperationRegistry<String,Integer> registry = new OperationRegistry<>();
         registry.register(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1));
         registry.register(new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2));
         registry.register(new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
-        ExpressionParser<Integer> parser = new ExpressionParser<>(new IntegerParser(), registry);
+        ExpressionParser<String,String,Integer> parser = new ExpressionParser<>(new StringInputParser(Separator.SPACE),
+                new IntegerParser(), registry);
 
         Expression<Integer> expression = parser.parseExpression(stringExpression);
 
