@@ -4,8 +4,11 @@ import com.nags.calculator.common.Separator;
 import com.nags.calculator.impl.strToInt.IntegerOperations;
 import com.nags.calculator.impl.strToInt.IntegerParser;
 import com.nags.calculator.impl.strToInt.StringInputParser;
+import com.nags.calculator.impl.strToInt.StringToSignParser;
 import com.nags.calculator.operation.Operation;
-import com.nags.calculator.operation.OperationRegistry;
+import com.nags.calculator.operation.impl.Addition;
+import com.nags.calculator.operation.impl.Division;
+import com.nags.calculator.operation.impl.Multiplication;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,12 +23,12 @@ public class ExpressionParserTest {
     @ParameterizedTest
     @MethodSource("parseExpressionCases")
     void shouldParseExpression(String stringExpression, String expectedPostfixNotation) {
-        OperationRegistry<String,Integer> registry = new OperationRegistry<>(
-            List.of(new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1),
-                new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2),
-                new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2)));
+        List<Operation<Integer>> supportedOperations = List.of(
+                new Addition<>(new IntegerOperations.IntegerAddition()),
+                new Multiplication<>(new IntegerOperations.IntegerMultiplication()),
+                new Division<>(new IntegerOperations.IntegerDivision()));
         ExpressionParser<String,String,Integer> parser = new ExpressionParser<>(new StringInputParser(Separator.SPACE),
-                new IntegerParser(), registry);
+                new IntegerParser(), new StringToSignParser(), supportedOperations);
 
         Expression<Integer> expression = parser.parseExpression(stringExpression);
 

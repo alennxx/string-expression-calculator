@@ -3,6 +3,7 @@ package com.nags.calculator.expression;
 import com.nags.calculator.expression.node.ExpressionNode;
 import com.nags.calculator.expression.node.OperatorNode;
 import com.nags.calculator.operation.Operation;
+import com.nags.calculator.operation.representation.RepresentationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +14,11 @@ public class OperatorNodeTest {
 
     private static final String SPACE = " ";
     private static final Integer OPERATION_RESULT = 5;
-    private static final String OPERATION_SYMBOL = "+";
+    private static final Character OPERATION_SYMBOL = '+';
     private static final Integer LEFT_OPERAND_VALUE = 1;
     private static final Integer RIGHT_OPERAND_VALUE = 4;
 
-    private Operation<String,Integer> operation;
+    private Operation<Integer> operation;
     private ExpressionNode<Integer> left;
     private ExpressionNode<Integer> right;
     private OperatorNode<String,Integer> operatorNode;
@@ -47,7 +48,7 @@ public class OperatorNodeTest {
         assertThat(infixNotation).isEqualTo(LEFT_OPERAND_VALUE + SPACE
                 + OPERATION_SYMBOL + SPACE + RIGHT_OPERAND_VALUE);
         verify(left).toInfixNotation();
-        verify(operation).symbol();
+        verify(operation).getRepresentation(RepresentationType.SIGN);
         verify(right).toInfixNotation();
     }
 
@@ -59,13 +60,13 @@ public class OperatorNodeTest {
                 + RIGHT_OPERAND_VALUE + SPACE + OPERATION_SYMBOL);
         verify(left).toPostfixNotation();
         verify(right).toPostfixNotation();
-        verify(operation).symbol();
+        verify(operation).getRepresentation(RepresentationType.SIGN);
     }
 
-    private Operation<String,Integer> operation() {
-        Operation<String,Integer> operation = mock(Operation.class);
+    private Operation<Integer> operation() {
+        Operation<Integer> operation = mock(Operation.class);
         when(operation.apply(anyInt(), anyInt())).thenReturn(OPERATION_RESULT);
-        when(operation.symbol()).thenReturn(OPERATION_SYMBOL);
+        when(operation.getRepresentation(any())).thenReturn(OPERATION_SYMBOL);
         return operation;
     }
 

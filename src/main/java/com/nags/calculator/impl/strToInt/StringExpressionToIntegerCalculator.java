@@ -3,23 +3,25 @@ package com.nags.calculator.impl.strToInt;
 import com.nags.calculator.common.Separator;
 import com.nags.calculator.impl.BaseCalculator;
 import com.nags.calculator.operation.Operation;
-import com.nags.calculator.operation.OperationRegistry;
+import com.nags.calculator.operation.impl.Addition;
+import com.nags.calculator.operation.impl.Division;
+import com.nags.calculator.operation.impl.Multiplication;
+import com.nags.calculator.operation.impl.Subtraction;
 
 import java.util.List;
 
 public class StringExpressionToIntegerCalculator extends BaseCalculator<String,String,Integer> {
 
     StringExpressionToIntegerCalculator() {
-        super(new StringInputParser(Separator.SPACE), new IntegerParser(), operationRegistry());
+        super(new StringInputParser(Separator.SPACE), new IntegerParser(), new StringToSignParser(), supportedOperations());
     }
 
-    private static OperationRegistry<String,Integer> operationRegistry() {
-        List<Operation<String,Integer>> supportedOperations = List.of(
-            new Operation<>(new IntegerOperations.IntegerAddition(), "+", 1),
-            new Operation<>(new IntegerOperations.IntegerSubtraction(), "-", 1),
-            new Operation<>(new IntegerOperations.IntegerMultiplication(), "*", 2),
-            new Operation<>(new IntegerOperations.IntegerDivision(), "/", 2));
-        return new OperationRegistry<>(supportedOperations);
+    private static List<Operation<Integer>> supportedOperations() {
+        return List.of(
+            new Addition<>(new IntegerOperations.IntegerAddition()),
+            new Subtraction<>(new IntegerOperations.IntegerSubtraction()),
+            new Multiplication<>(new IntegerOperations.IntegerMultiplication()),
+            new Division<>(new IntegerOperations.IntegerDivision()));
     }
 
 }

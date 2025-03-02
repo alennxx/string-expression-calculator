@@ -5,7 +5,9 @@ import com.nags.calculator.expression.node.OperandNode;
 import com.nags.calculator.expression.node.OperatorNode;
 import com.nags.calculator.operation.Operation;
 import com.nags.calculator.operation.OperationRegistry;
+import com.nags.calculator.operation.representation.RepresentationType;
 
+import java.util.List;
 import java.util.Stack;
 
 public class ExpressionParser<I, T, N extends Number> {
@@ -15,23 +17,23 @@ public class ExpressionParser<I, T, N extends Number> {
     private final OperationRegistry<T, N> operationRegistry;
 
     public ExpressionParser(InputParser<I, T> inputParser, OperandParser<T, N> operandParser,
-                            OperationRegistry<T, N> operationRegistry) {
+                            OperatorParser<T,?> operatorParser, List<Operation<N>> supportedOperations) {
         this.inputParser = inputParser;
         this.operandParser = operandParser;
-        this.operationRegistry = operationRegistry;
+        this.operationRegistry = new OperationRegistry<>(operatorParser, supportedOperations);
     }
 
     public Expression<N> parseExpression(I expression) {
         final T[] tokens = inputParser.parse(expression);
         final Stack<ExpressionNode<N>> result = new Stack<>();
-        final Stack<Operation<T, N>> operations = new Stack<>();
+        final Stack<Operation<N>> operations = new Stack<>();
         for (T token : tokens) {
             if (operandParser.isValid(token)) {
                 OperandNode<N> operandNode = new OperandNode<>(operandParser.parse(token));
                 result.push(operandNode);
             } else if (operationRegistry.isSupportedOperator(token)) {
-                Operation<T, N> operation = operationRegistry.getOperation(token);
-                while (!operations.isEmpty() && operations.peek().priority() >= operation.priority()) {
+                Operation<N> operation = operationRegistry.getOperation(token);
+                while (hasPriorityLessOrEqualToTopOperation(operations, operation)) {
                     pushOperatorForTopOperation(result, operations);
                 }
                 operations.push(operation);
@@ -45,12 +47,16 @@ public class ExpressionParser<I, T, N extends Number> {
         return new Expression<>(result.pop());
     }
 
-    private void pushOperatorForTopOperation(Stack<ExpressionNode<N>> result, Stack<Operation<T, N>> operations) {
+    private boolean hasPriorityLessOrEqualToTopOperation(Stack<Operation<N>> operations, Operation<N> operation) {
+        return !operations.isEmpty() && operations.peek().getPriority() >= operation.getPriority();
+    }
+
+    private void pushOperatorForTopOperation(Stack<ExpressionNode<N>> result, Stack<Operation<N>> operations) {
         OperatorNode<T, N> operatorNode = createOperator(result, operations);
         result.push(operatorNode);
     }
 
-    private OperatorNode<T, N> createOperator(Stack<ExpressionNode<N>> result, Stack<Operation<T, N>> operations) {
+    private OperatorNode<T, N> createOperator(Stack<ExpressionNode<N>> result, Stack<Operation<N>> operations) {
         ExpressionNode<N> right = result.pop();
         ExpressionNode<N> left = result.pop();
         return new OperatorNode<>(operations.pop(), left, right);
